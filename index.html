@@ -1,0 +1,2784 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset='utf-8'>
+  <title>@echo/is.js 1.0.0 | Documentation</title>
+  <meta name='description' content='Tiny JS Type Checker Module for Node &amp; Browser — Supports Stringified Types'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' rel='stylesheet'>
+  <link href='assets/style.css' rel='stylesheet'>
+  <link href='assets/github.css' rel='stylesheet'>
+  <link href='assets/split.css' rel='stylesheet'>
+</head>
+<body class='documentation m0'>
+    <div class='flex'>
+      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'>@echo/is.js</h3>
+          <div class='mb1'><code>1.0.0</code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            spellcheck='false'
+            autocapitalize='off'
+            autocorrect='off'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#is'
+                  class=" toggle-sibling">
+                  is
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  <ul class='list-reset py1-ul pl1'>
+                    <li class='h5'><span>Static members</span></li>
+                    
+                      <li><a
+                        href='#isextend'
+                        class='regular pre-open'>
+                        .extend
+                      </a></li>
+                    
+                      <li><a
+                        href='#isarray'
+                        class='regular pre-open'>
+                        .array
+                      </a></li>
+                    
+                      <li><a
+                        href='#isobject'
+                        class='regular pre-open'>
+                        .object
+                      </a></li>
+                    
+                      <li><a
+                        href='#isrepresentation'
+                        class='regular pre-open'>
+                        .representation
+                      </a></li>
+                    
+                      <li><a
+                        href='#istype'
+                        class='regular pre-open'>
+                        .type
+                      </a></li>
+                    
+                      <li><a
+                        href='#istype'
+                        class='regular pre-open'>
+                        .type
+                      </a></li>
+                    
+                      <li><a
+                        href='#istypeof'
+                        class='regular pre-open'>
+                        .typeOf
+                      </a></li>
+                    
+                      <li><a
+                        href='#istypeof'
+                        class='regular pre-open'>
+                        .typeOf
+                      </a></li>
+                    
+                    </ul>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#isactual'
+                        class='regular pre-open'>
+                        #actual
+                      </a></li>
+                      
+                      <li><a
+                        href='#isnot'
+                        class='regular pre-open'>
+                        #not
+                      </a></li>
+                      
+                      <li><a
+                        href='#isarray-1'
+                        class='regular pre-open'>
+                        #array
+                      </a></li>
+                      
+                      <li><a
+                        href='#isboolean'
+                        class='regular pre-open'>
+                        #boolean
+                      </a></li>
+                      
+                      <li><a
+                        href='#isfunction'
+                        class='regular pre-open'>
+                        #function
+                      </a></li>
+                      
+                      <li><a
+                        href='#isin'
+                        class='regular pre-open'>
+                        #in
+                      </a></li>
+                      
+                      <li><a
+                        href='#isnan'
+                        class='regular pre-open'>
+                        #nan
+                      </a></li>
+                      
+                      <li><a
+                        href='#isnull'
+                        class='regular pre-open'>
+                        #null
+                      </a></li>
+                      
+                      <li><a
+                        href='#isnumber'
+                        class='regular pre-open'>
+                        #number
+                      </a></li>
+                      
+                      <li><a
+                        href='#isobject-1'
+                        class='regular pre-open'>
+                        #object
+                      </a></li>
+                      
+                      <li><a
+                        href='#isoftype'
+                        class='regular pre-open'>
+                        #oftype
+                      </a></li>
+                      
+                      <li><a
+                        href='#isregexp'
+                        class='regular pre-open'>
+                        #regexp
+                      </a></li>
+                      
+                      <li><a
+                        href='#isrepresentation-1'
+                        class='regular pre-open'>
+                        #representation
+                      </a></li>
+                      
+                      <li><a
+                        href='#isstring'
+                        class='regular pre-open'>
+                        #string
+                      </a></li>
+                      
+                      <li><a
+                        href='#issymbol'
+                        class='regular pre-open'>
+                        #symbol
+                      </a></li>
+                      
+                      <li><a
+                        href='#isundefined'
+                        class='regular pre-open'>
+                        #undefined
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                  
+                </div>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#extendcallback'
+                  class="">
+                  ExtendCallBack
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#pluginfunctionmap'
+                  class="">
+                  PluginFunctionMap
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#representation'
+                  class="">
+                  Representation
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#specific'
+                  class="">
+                  Specific
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#typeof'
+                  class="">
+                  Typeof
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='is'>
+      is
+    </h3>
+    
+    
+  </div>
+  
+
+  <p><code>is.js</code></p>
+
+    <div class='pre p1 fill-light mt0'>new is(actual: any): <a href="#is">is</a></div>
+  
+  
+
+  
+  <div>Version: 1.0.0</div>
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>actual</span> <code class='quiet'>(any)</code>
+	    something to check
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#is">is</a></code>:
+        is instance
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='isextend'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>extend(object)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Extend <code>is.prototype</code></p>
+
+    <div class='pre p1 fill-light mt0'>extend(object: <a href="#pluginfunctionmap">PluginFunctionMap</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(<a href="#pluginfunctionmap">PluginFunctionMap</a>)</code>
+	    plugins object
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>is.<span class="hljs-title function_">extend</span>({
+  <span class="hljs-attr">uppercase</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">actual</span>.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">every</span>(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x.<span class="hljs-title function_">match</span>(<span class="hljs-regexp">/[A-Z]/</span>));
+  }
+});
+
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;WORD&#x27;</span>).<span class="hljs-title function_">uppercase</span>()     <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;Word&#x27;</span>).<span class="hljs-title function_">uppercase</span>()     <span class="hljs-comment">// false</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;Word&#x27;</span>).<span class="hljs-property">not</span>.<span class="hljs-title function_">uppercase</span>() <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isarray'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>array(object)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Validates with type predicate if <code>object</code> is array</p>
+
+    <div class='pre p1 fill-light mt0'>array(object: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    The object to check
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> <span class="hljs-attr">x</span>: unknown = ...;
+
+<span class="hljs-keyword">if</span> (is.<span class="hljs-title function_">array</span>(x)) {
+  <span class="hljs-comment">// x here is any[]</span>
+}</pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isobject'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>object(object)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Validates if <code>object</code> is a plain object</p>
+
+    <div class='pre p1 fill-light mt0'>object(object: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    The object to check
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>is.<span class="hljs-title function_">object</span>({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> })        <span class="hljs-comment">// true</span>
+is.<span class="hljs-title function_">object</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Something</span>()) <span class="hljs-comment">// false`</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isrepresentation'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>representation(object, expected)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Get the string representation of <code>object</code>
+and optionaly compare it against <code>expected</code></p>
+
+    <div class='pre p1 fill-light mt0'>representation(object: any, expected: <a href="#representation">Representation</a>): <a href="#representation">Representation</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    The object to check
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>expected</span> <code class='quiet'>(<a href="#representation">Representation</a>)</code>
+	    e.g 
+<code>"[object Boolean]"</code>
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#representation">Representation</a></code>:
+        
+      
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>is.<span class="hljs-title function_">representation</span>(<span class="hljs-literal">null</span>) <span class="hljs-comment">// &#x27;[object Null]&#x27;</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>is.<span class="hljs-title function_">representation</span>(<span class="hljs-literal">true</span>, <span class="hljs-string">&#x27;[object Boolean]&#x27;</span>) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='istype'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>type(object, expected)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  
+    <div class='pre p1 fill-light mt0'>type(object: any, expected: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>expected</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='istype'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>type(object, expected)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p><strong>How it works?</strong></p>
+<blockquote>
+<p>If only <code>object</code> parameter is provided, return it's specific type</p>
+</blockquote>
+<pre><code>is.type([] | "[]");      // 'array'
+is.type({} | "{}");      // 'object'
+is.type(1 | "2");        // 'number'
+is.type(true | "false"); // 'boolean'
+is.type("something");    // 'string'
+is.type(/[0-9]/g);       // 'regexp'
+</code></pre>
+<blockquote>
+<p>If <code>object</code> and <code>expected</code> are provides, returns boolean with a type predicate</p>
+</blockquote>
+<pre><code>const arg = process.argv[2];
+
+if ( is.type(arg, 'array') ) {
+  // true and arg is any[]
+}
+
+if ( is.type(arg, 'symbol') ) {
+  // true and arg is symbol
+}
+</code></pre>
+<blockquote>
+<p>But wait, actually ( "{}", "[]", "2" ) are strings</p>
+</blockquote>
+<pre><code>const arg = '{a: 1}'; // 'string'
+
+// If `object` is of type 'string'
+// with `expected` set to 'string'
+// returns true, regardless it's content
+is.type(arg, 'string') // true, with 'string' type predicate
+
+// via `is.prototype.str`
+is(arg).string() // true, but no type predicate
+</code></pre>
+<p><strong>What the specific type is</strong></p>
+<blockquote>
+<p>For cli inputs and types wrapped in a string, try to extract and define it's type</p>
+</blockquote>
+
+    <div class='pre p1 fill-light mt0'>type(object: any, expected: <a href="#specific">Specific</a>): (<a href="#specific">Specific</a> | <code>"unknown"</code>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    The object whose type to be checked
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>expected</span> <code class='quiet'>(<a href="#specific">Specific</a>)</code>
+	    The 
+<code>object</code>
+ expected type
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>(<a href="#specific">Specific</a> | <code>"unknown"</code>)</code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='istypeof'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>typeOf(object, expected)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  
+    <div class='pre p1 fill-light mt0'>typeOf(object: any, expected: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>expected</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='istypeof'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>typeOf(object, expected)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Check with type predicate if <code>object</code> is typeof <code>expected</code></p>
+
+    <div class='pre p1 fill-light mt0'>typeOf(object: any, expected: Expected)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    The object whose type to be checked
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>expected</span> <code class='quiet'>(Expected)</code>
+	    The 
+<code>object</code>
+ expected type
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>is.<span class="hljs-title function_">typeOf</span>([<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-string">&#x27;object&#x27;</span>)  <span class="hljs-comment">// true</span>
+is.<span class="hljs-title function_">typeOf</span>({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>}, <span class="hljs-string">&#x27;object&#x27;</span>) <span class="hljs-comment">// true</span>
+is.<span class="hljs-title function_">typeOf</span>(<span class="hljs-literal">null</span>, <span class="hljs-string">&#x27;object&#x27;</span>)   <span class="hljs-comment">// true</span>
+is.<span class="hljs-title function_">typeOf</span>(<span class="hljs-string">&#x27;xyz&#x27;</span>, <span class="hljs-string">&#x27;string&#x27;</span>)  <span class="hljs-comment">// true</span>
+is.<span class="hljs-title function_">typeOf</span>(<span class="hljs-number">0</span>, <span class="hljs-string">&#x27;number&#x27;</span>)      <span class="hljs-comment">// true</span>
+is.<span class="hljs-title function_">typeOf</span>(<span class="hljs-literal">false</span>, <span class="hljs-string">&#x27;boolean&#x27;</span>) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='isactual'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>actual</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>The <code>actual</code> property is the parameter passed to <code>is</code></p>
+
+    <div class='pre p1 fill-light mt0'>actual</div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isnot'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>not</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>The <code>not</code> property has the negated version of <code>is.prototype</code></p>
+
+    <div class='pre p1 fill-light mt0'>not</div>
+  
+    <p>
+      Type:
+      Omit&#x3C;<a href="#is">is</a>, (<code>"not"</code> | <code>"actual"</code>)>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> x = <span class="hljs-string">&#x27;&#x27;</span>;
+<span class="hljs-title function_">is</span>(x).<span class="hljs-title function_">string</span>()                   <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(x).<span class="hljs-property">not</span>.<span class="hljs-title function_">string</span>()               <span class="hljs-comment">// false</span>
+<span class="hljs-title function_">is</span>(x).<span class="hljs-property">not</span>.<span class="hljs-title function_">string</span>({<span class="hljs-attr">empty</span>: <span class="hljs-literal">false</span>}) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isarray-1'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>array(options?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is array,
+with optional behavior for string array</p>
+
+    <div class='pre p1 fill-light mt0'>array(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?)</code>
+	    Optional configration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.string</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>If true, also considers
+the string array 
+<code>"[...]"</code>
+ as valid array matches
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>([<span class="hljs-string">&#x27;A&#x27;</span>]).<span class="hljs-title function_">array</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;[1]&#x27;</span>).<span class="hljs-title function_">array</span>({<span class="hljs-attr">string</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isboolean'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>boolean(options?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is boolean (true | false)
+with optional behavior for string boolean</p>
+
+    <div class='pre p1 fill-light mt0'>boolean(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+	    Optional configration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.string</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>If true, also considers
+the strings 'true' and 'false' as valid boolean matches
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-literal">true</span>).<span class="hljs-title function_">boolean</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;false&#x27;</span>).<span class="hljs-title function_">boolean</span>({<span class="hljs-attr">string</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isfunction'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>function()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is function</p>
+
+    <div class='pre p1 fill-light mt0'>function(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-function">() =&gt;</span> {}).<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isin'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>in(object, options = {mode:'all'})</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Determines if <code>is.prototype.actual</code> in <code>object</code> or <code>array</code>,
+with optional strict check for ownProperties</p>
+
+    <div class='pre p1 fill-light mt0'>in(object: any, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    Object to search in
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?
+            = <code>{mode:&#39;all&#39;}</code>)</code>
+	    Optional configration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.mode</span> <code class='quiet'>(<code>"all"</code> | <code>"own"</code>)?</code>
+  </td>
+  <td class='break-word'><span>If 'own' check only the object direct properties
+(ownProperties) not inherited, defaults to 'all'
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> a = {<span class="hljs-attr">one</span>: <span class="hljs-number">1</span>};
+<span class="hljs-keyword">const</span> b = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(a);
+b.<span class="hljs-property">tow</span> = <span class="hljs-number">2</span>;
+
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;a&#x27;</span>).<span class="hljs-title function_">in</span>([<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-literal">true</span>]) <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;one&#x27;</span>).<span class="hljs-title function_">in</span>(b) <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;tow&#x27;</span>).<span class="hljs-title function_">in</span>(b) <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;one&#x27;</span>).<span class="hljs-title function_">in</span>(b, {<span class="hljs-attr">mode</span>: <span class="hljs-string">&#x27;own&#x27;</span>}) <span class="hljs-comment">// false</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;tow&#x27;</span>).<span class="hljs-title function_">in</span>(b, {<span class="hljs-attr">mode</span>: <span class="hljs-string">&#x27;own&#x27;</span>}) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isnan'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>nan(options?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is NaN, by default coerces the input to a number first
+with optional behavior for skips coercion (exact NaN check)</p>
+
+    <div class='pre p1 fill-light mt0'>nan(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?)</code>
+	    Optional configration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.strict</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>If true, check 
+<code>is.prototype.actual</code>
+ is exactly 
+<code>NaN</code>
+
+without coerces to a number before checking
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;a&#x27;</span>).<span class="hljs-title function_">nan</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-title class_">NaN</span>).<span class="hljs-title function_">nan</span>({<span class="hljs-attr">strict</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;a&#x27;</span>).<span class="hljs-title function_">nan</span>({<span class="hljs-attr">strict</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isnull'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>null(options?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is null,
+with optional behavior for string null</p>
+
+    <div class='pre p1 fill-light mt0'>null(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?)</code>
+	    Optional configration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.string</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>If true, also considers the string null "null"
+as valid null matches
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-literal">null</span>).<span class="hljs-title function_">null</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;null&#x27;</span>).<span class="hljs-title function_">null</span>({<span class="hljs-attr">string</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isnumber'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>number(options?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is number,
+with optional behavior for string number</p>
+
+    <div class='pre p1 fill-light mt0'>number(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?)</code>
+	    Optional configuration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.string</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>If true considers string values that can be
+converted to a number as valid otherwise checks for number type
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-number">1</span>).<span class="hljs-title function_">number</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;2&#x27;</span>).<span class="hljs-title function_">number</span>({<span class="hljs-attr">string</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isobject-1'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>object(options?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is object,
+with optional behavior for string object</p>
+
+    <div class='pre p1 fill-light mt0'>object(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?)</code>
+	    Optional configration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.string</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>If true, also considers the string object "{...}"
+as valid object matches
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>}).<span class="hljs-title function_">object</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;{a: 1}&#x27;</span>).<span class="hljs-title function_">object</span>({<span class="hljs-attr">string</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;{&quot;a&quot;: &quot;1&quot;}&#x27;</span>).<span class="hljs-title function_">object</span>({<span class="hljs-attr">string</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isoftype'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>oftype(expected, options?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Check weather <code>is.prototype.actual</code> is type of <code>expected</code>,
+with optional string type matches</p>
+
+    <div class='pre p1 fill-light mt0'>oftype(expected: <a href="#specific">Specific</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>expected</span> <code class='quiet'>(<a href="#specific">Specific</a>)</code>
+	    The expected type
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?)</code>
+	    Optional configuration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.string</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>If true considers string values that can be
+converted to 
+<code>expected</code>
+ type as valid otherwise checks for 
+<code>expected</code>
+ type
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;value&#x27;</span>).<span class="hljs-title function_">oftype</span>(<span class="hljs-string">&#x27;string&#x27;</span>) <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-literal">true</span>).<span class="hljs-title function_">oftype</span>(<span class="hljs-string">&#x27;boolean&#x27;</span>) <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;1&#x27;</span>).<span class="hljs-title function_">oftype</span>(<span class="hljs-string">&#x27;number&#x27;</span>, {<span class="hljs-attr">string</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isregexp'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>regexp()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is RegExp</p>
+
+    <div class='pre p1 fill-light mt0'>regexp(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-regexp">/[a-z]/g</span>).<span class="hljs-title function_">regexp</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(<span class="hljs-regexp">/0-9/</span>, <span class="hljs-string">&#x27;g&#x27;</span>)).<span class="hljs-title function_">regexp</span>() <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isrepresentation-1'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>representation(expected)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns either the string representation of <code>is.prototype.actual</code> (if expected is omitted)
+or a boolean value indicating whether the string representations of <code>is.prototype.actual</code>
+and <code>expected</code> are equal</p>
+
+    <div class='pre p1 fill-light mt0'>representation(expected: <a href="#representation">Representation</a>): <a href="#representation">Representation</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>expected</span> <code class='quiet'>(<a href="#representation">Representation</a>)</code>
+	    Object string representation e.g 
+<code>"[object Boolean]"</code>
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#representation">Representation</a></code>:
+        
+      
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;abc&#x27;</span>).<span class="hljs-title function_">representation</span>() <span class="hljs-comment">// &#x27;[object String]&#x27;</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-literal">null</span>).<span class="hljs-title function_">representation</span>(<span class="hljs-string">&quot;[object Null]&quot;</span>) <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>([<span class="hljs-number">12</span>]).<span class="hljs-title function_">representation</span>(<span class="hljs-string">&quot;[object Null]&quot;</span>) <span class="hljs-comment">// false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isstring'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>string(options = {empty:true})</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is string,
+with optional behavior for empty strings</p>
+
+    <div class='pre p1 fill-light mt0'>string(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?
+            = <code>{empty:true}</code>)</code>
+	    Optional configration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.empty</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>Match empty string "" , defaults to 
+<code>true</code>
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;value&#x27;</span>).<span class="hljs-title function_">string</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">string</span>({<span class="hljs-attr">empty</span>: <span class="hljs-literal">false</span>}) <span class="hljs-comment">// false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='issymbol'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>symbol()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is symbol</p>
+
+    <div class='pre p1 fill-light mt0'>symbol(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>(<span class="hljs-title class_">Symbol</span>()).<span class="hljs-title function_">symbol</span>() <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='isundefined'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>undefined(options?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Checks if <code>is.prototype.actual</code> is undefined,
+with optional behavior for string undefined</p>
+
+    <div class='pre p1 fill-light mt0'>undefined(options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  <div>Since: 1.0.0</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?)</code>
+	    Optional configration object
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>options.string</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+  </td>
+  <td class='break-word'><span>If true, also considers the string undefined "undefined"
+as valid undefined matches
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-title function_">is</span>().<span class="hljs-title function_">undefined</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-literal">undefined</span>).<span class="hljs-title function_">undefined</span>() <span class="hljs-comment">// true</span>
+<span class="hljs-title function_">is</span>(<span class="hljs-string">&#x27;undefined&#x27;</span>).<span class="hljs-title function_">undefined</span>({<span class="hljs-attr">string</span>: <span class="hljs-literal">true</span>}) <span class="hljs-comment">// true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='extendcallback'>
+      ExtendCallBack
+    </h3>
+    
+    
+  </div>
+  
+
+  
+    <div class='pre p1 fill-light mt0'>ExtendCallBack(options: any?, config: any?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(any?)</code>
+	    Optional options parameter
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>config</span> <code class='quiet'>(any?)</code>
+	    Optional config parameter
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='pluginfunctionmap'>
+      PluginFunctionMap
+    </h3>
+    
+    
+  </div>
+  
+
+  
+    <div class='pre p1 fill-light mt0'>PluginFunctionMap</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a href="#extendcallback">ExtendCallBack</a>>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='representation'>
+      Representation
+    </h3>
+    
+    
+  </div>
+  
+
+  
+    <div class='pre p1 fill-light mt0'>Representation</div>
+  
+    <p>
+      Type:
+      (<code>"[object Type]"</code>)
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='specific'>
+      Specific
+    </h3>
+    
+    
+  </div>
+  
+
+  
+    <div class='pre p1 fill-light mt0'>Specific</div>
+  
+    <p>
+      Type:
+      (<code>"string"</code> | <code>"number"</code> | <code>"boolean"</code> | <code>"array"</code> | <code>"object"</code> | <code>"function"</code> | <code>"symbol"</code> | <code>"null"</code> | <code>"undefined"</code> | <code>"regexp"</code>)
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='typeof'>
+      Typeof
+    </h3>
+    
+    
+  </div>
+  
+
+  
+    <div class='pre p1 fill-light mt0'>Typeof</div>
+  
+    <p>
+      Type:
+      (<code>"bigint"</code> | <code>"boolean"</code> | <code>"function"</code> | <code>"number"</code> | <code>"object"</code> | <code>"string"</code> | <code>"symbol"</code> | <code>"undefined"</code>)
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/split.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "name": "@echo-64/is.js",
+  "version": "1.0.0",
+  "description": "Tiny JS Type Checker Module for Node & Browser — Supports Stringified Types",
+  "author": "𝖊𝖈𝖍𝖔 <https://github.com/echo-64>",
+  "license": "MIT",
+  "main": "./dist/is.js",
+  "module": "./dist/is.mjs",
+  "browser": "./dist/is.min.js",
+  "types": "./dist/is.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/is.js",
+      "import": "./dist/is.mjs",
+      "types": "./dist/is.d.ts"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/echo-64/is.js.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "./dist",
+    "./LICENSE",
+    "./README.md",
+    "./is.js.gif",
+    "./package.json"
+  ],
+  "keywords": [
+    "check",
+    "type-safe",
+    "type-check"
+  ],
+  "scripts": {
+    "watch": "npx rollup -c -w",
+    "clean": "rm -rf ./dist/* ./docs/*",
+    "declaration": "npx tsc -p ./tsconfig.declaration.json",
+    "build": "npm run clean && npx rollup -c && npm run declaration",
+    "docs": "npx documentation build ./dist/is.js -f html -o ./docs",
+    "deploy": "npx gh-pages -d ./docs",
+    "all": "npm run build && npm run docs"
+  },
+  "dependencies": {
+    "json5": "^2.2.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "documentation": "^14.0.3",
+    "gh-pages": "^6.3.0",
+    "rollup": "^4.41.1",
+    "rollup-plugin-glob": "^1.0.2",
+    "typescript": "^5.8.3"
+  }
+}

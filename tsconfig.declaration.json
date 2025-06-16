@@ -1,0 +1,12 @@
+{
+  "include": ["./dist/is.js"],
+  "exclude": ["./dist/*.{js,mjs,ts}"],
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "./dist",
+    "esModuleInterop": false
+  },
+}

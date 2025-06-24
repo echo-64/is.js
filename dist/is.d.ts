@@ -503,7 +503,7 @@ declare function representation(object: any, expected: Representation): boolean;
  *
  * @overload Compare with type predicate
  * @param {*} object - The object whose type to be checked
- * @param {Specific} expected - The `object` expected type
+ * @param {Expected} expected - The `object` expected type
  * @returns {object is SpecificMap[Expected]}
  *
  * @memberOf is
@@ -563,14 +563,14 @@ declare function type<Expected extends Specific>(object: any): Specific | "unkno
  *
  * @overload Compare with type predicate
  * @param {*} object - The object whose type to be checked
- * @param {Specific} expected - The `object` expected type
+ * @param {Expected} expected - The `object` expected type
  * @returns {object is SpecificMap[Expected]}
  *
  * @memberOf is
  * @static
  * @since 1.0.0
  */
-declare function type<Expected extends Specific>(object: any, expected: Specific): object is SpecificMap[Expected];
+declare function type<Expected extends Specific>(object: any, expected: Expected): object is SpecificMap[Expected];
 /**
  * @typedef {(
  * 'bigint'

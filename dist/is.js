@@ -244,7 +244,7 @@ is.representation = function (object, expected) {
  *
  * @overload Compare with type predicate
  * @param {*} object - The object whose type to be checked
- * @param {Specific} expected - The `object` expected type
+ * @param {Expected} expected - The `object` expected type
  * @returns {object is SpecificMap[Expected]}
  *
  * @memberOf is

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>@echo/is.js 1.0.0 | Documentation</title>
+  <title>@echo-64/is.js 1.0.0 | Documentation</title>
   <meta name='description' content='Tiny JS Type Checker Module for Node &amp; Browser — Supports Stringified Types'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
@@ -14,7 +14,7 @@
     <div class='flex'>
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'>@echo/is.js</h3>
+          <h3 class='mb0 no-anchor'>@echo-64/is.js</h3>
           <div class='mb1'><code>1.0.0</code></div>
           <input
             placeholder='Filter'
@@ -767,7 +767,7 @@ is(arg).string() // true, but no type predicate
 <p>For cli inputs and types wrapped in a string, try to extract and define it's type</p>
 </blockquote>
 
-    <div class='pre p1 fill-light mt0'>type(object: any, expected: <a href="#specific">Specific</a>): (<a href="#specific">Specific</a> | <code>"unknown"</code>)</div>
+    <div class='pre p1 fill-light mt0'>type(object: any, expected: Expected): (<a href="#specific">Specific</a> | <code>"unknown"</code>)</div>
   
   
 
@@ -793,7 +793,7 @@ is(arg).string() // true, but no type predicate
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>expected</span> <code class='quiet'>(<a href="#specific">Specific</a>)</code>
+            <span class='code bold'>expected</span> <code class='quiet'>(Expected)</code>
 	    The 
 <code>object</code>
  expected type

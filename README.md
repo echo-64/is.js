@@ -12,20 +12,24 @@
 npm install @echo-64/is.js
 ```
 
-## Api
+## Usage
 
 ```js
 // commonjs
-const is = require("@echo/is.js");
+const is = require("@echo-64/is.js");
 
 // esm
-import is from "@echo/is.js";
+import is from "@echo-64/is.js";
 
 // browser
 <script src="is.min.js"></script>
 ```
 
 **See**: [docs](https://echo-64.github.io/is.js/)
+
+## CHANGELOG
+
+[CHANGELOG.md](./CHANGELOG.md)
 
 ## License
 

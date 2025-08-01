@@ -1,6 +1,6 @@
 {
   "name": "@echo-64/is.js",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Tiny JS Type Checker Module for Node & Browser — Supports Stringified Types",
   "author": "𝖊𝖈𝖍𝖔 <https://github.com/echo-64>",
   "license": "MIT",
@@ -28,7 +28,8 @@
     "./README.md",
     "./CHANGELOG.md",
     "./is.js.gif",
-    "./package.json"
+    "./package.json",
+    "./package-lock.json"
   ],
   "keywords": [
     "check",

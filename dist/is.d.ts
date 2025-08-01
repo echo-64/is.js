@@ -43,16 +43,19 @@ declare class is {
     not: Omit<is, "not" | "actual">;
     /**
      * Checks if `is.prototype.actual` is array,
-     * with optional behavior for string array
+     * with optional behavior for string array and empty ones
      *
      * @param {object} [options] - Optional configration object
      * @param {boolean} [options.string] - If true, also considers
      * the string array `"[...]"` as valid array matches
+     * @param {boolean} [options.empty] - If false, considers
+     * empty array `[]` as invalid array matches
      * @returns {boolean}
      *
      * @example
      * is(['A']).array() // true
      * is('[1]').array({string: true}) // true
+     * is([]).array({empty: false}) // false
      *
      * @memberof is
      * @instance
@@ -60,6 +63,7 @@ declare class is {
      */
     array(options?: {
         string?: boolean;
+        empty?: boolean;
     }): boolean;
     /**
      * Checks if `is.prototype.actual` is boolean (true | false)
@@ -95,8 +99,8 @@ declare class is {
      */
     function(): boolean;
     /**
-     * Determines if `is.prototype.actual` in `object` or `array`,
-     * with optional strict check for ownProperties
+     * Determines if `is.prototype.actual` in `object`, `array` or `string`,
+     * with optional strict check for `object` ownProperties
      *
      * @param {*} object - Object to search in
      * @param {object} [options] - Optional configration object
@@ -105,15 +109,18 @@ declare class is {
      * @returns {boolean}
      *
      * @example
-     * const a = {one: 1};
-     * const b = Object.create(a);
-     * b.tow = 2;
+     * const str = 'a b c';
+     * const arr = [1, 'a', true];
+     * const abj1 = {one: 1};
+     * const obj2 = Object.create(obj1);
+     * obj2.tow = 2;
      *
-     * is('a').in([1, 'a', true]) // true
-     * is('one').in(b) // true
-     * is('tow').in(b) // true
-     * is('one').in(b, {mode: 'own'}) // false
-     * is('tow').in(b, {mode: 'own'}) // true
+     * is('b').in(str) // true
+     * is('a').in(arr) // true
+     * is('one').in(obj2) // true
+     * is('tow').in(obj2) // true
+     * is('one').in(obj2, {mode: 'own'}) // false
+     * is('tow').in(obj2, {mode: 'own'}) // true
      *
      * @memberof is
      * @instance
@@ -187,11 +194,13 @@ declare class is {
     }): boolean;
     /**
      * Checks if `is.prototype.actual` is object,
-     * with optional behavior for string object
+     * with optional behavior for string object and empty ones
      *
      * @param {object} [options] - Optional configration object
-     * @param {boolean} [options.string] - If true, also considers the string object "{...}"
-     * as valid object matches
+     * @param {boolean} [options.string] - If true, also considers
+     * the string object "{...}" as valid object matches
+     * @param {boolean} [options.empty] - If false, considers
+     * empty object `{}` as invalid object matches
      *
      * @returns {boolean}
      *
@@ -199,6 +208,7 @@ declare class is {
      * is({a: 1}).object() // true
      * is('{a: 1}').object({string: true}) // true
      * is('{"a": "1"}').object({string: true}) // true
+     * is({}).object({empty: false}) // false
      *
      * @memberof is
      * @instance
@@ -206,6 +216,7 @@ declare class is {
      */
     object(options?: {
         string?: boolean;
+        empty?: boolean;
     }): boolean;
     /**
      * Check weather `is.prototype.actual` is type of `expected`,

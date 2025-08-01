@@ -342,29 +342,39 @@ is.typeOf = function (object, expected) {
 
 /**
  * Checks if `is.prototype.actual` is array,
- * with optional behavior for string array
+ * with optional behavior for string array and empty ones
  *
  * @param {object} [options] - Optional configration object
  * @param {boolean} [options.string] - If true, also considers
  * the string array `"[...]"` as valid array matches
+ * @param {boolean} [options.empty] - If false, considers
+ * empty array `[]` as invalid array matches
  * @returns {boolean}
  *
  * @example
  * is(['A']).array() // true
  * is('[1]').array({string: true}) // true
+ * is([]).array({empty: false}) // false
  *
  * @memberof is
  * @instance
  * @since 1.0.0
  */
-is.prototype.array = function (options) {
+is.prototype.array = function (options = {}) {
+  options = {
+    string: options.string ?? false,
+    empty: options.empty ?? true,
+  };
+
   try {
     const parsed =
       options?.string === true && this.string()
         ? json5.parse(this.actual)
         : this.actual;
 
-    return is.array(parsed);
+    return options.empty === true
+      ? is.array(parsed)
+      : is.array(parsed) && parsed.length > 0;
   } catch {
     return false;
   }
@@ -417,8 +427,8 @@ is.prototype.function = function () {
 };
 
 /**
- * Determines if `is.prototype.actual` in `object` or `array`,
- * with optional strict check for ownProperties
+ * Determines if `is.prototype.actual` in `object`, `array` or `string`,
+ * with optional strict check for `object` ownProperties
  *
  * @param {*} object - Object to search in
  * @param {object} [options] - Optional configration object
@@ -427,22 +437,25 @@ is.prototype.function = function () {
  * @returns {boolean}
  *
  * @example
- * const a = {one: 1};
- * const b = Object.create(a);
- * b.tow = 2;
+ * const str = 'a b c';
+ * const arr = [1, 'a', true];
+ * const abj1 = {one: 1};
+ * const obj2 = Object.create(obj1);
+ * obj2.tow = 2;
  *
- * is('a').in([1, 'a', true]) // true
- * is('one').in(b) // true
- * is('tow').in(b) // true
- * is('one').in(b, {mode: 'own'}) // false
- * is('tow').in(b, {mode: 'own'}) // true
+ * is('b').in(str) // true
+ * is('a').in(arr) // true
+ * is('one').in(obj2) // true
+ * is('tow').in(obj2) // true
+ * is('one').in(obj2, {mode: 'own'}) // false
+ * is('tow').in(obj2, {mode: 'own'}) // true
  *
  * @memberof is
  * @instance
  * @since 1.0.0
  */
 is.prototype.in = function (object, options = { mode: 'all' }) {
-  if (is.array(object)) {
+  if (typeof object === 'string' || is.array(object)) {
     return object.includes(this.actual);
   } else if (is.object(object)) {
     if (options.mode === 'own') {
@@ -537,11 +550,13 @@ is.prototype.number = function (options) {
 
 /**
  * Checks if `is.prototype.actual` is object,
- * with optional behavior for string object
+ * with optional behavior for string object and empty ones
  *
  * @param {object} [options] - Optional configration object
- * @param {boolean} [options.string] - If true, also considers the string object "{...}"
- * as valid object matches
+ * @param {boolean} [options.string] - If true, also considers
+ * the string object "{...}" as valid object matches
+ * @param {boolean} [options.empty] - If false, considers
+ * empty object `{}` as invalid object matches
  *
  * @returns {boolean}
  *
@@ -549,19 +564,27 @@ is.prototype.number = function (options) {
  * is({a: 1}).object() // true
  * is('{a: 1}').object({string: true}) // true
  * is('{"a": "1"}').object({string: true}) // true
+ * is({}).object({empty: false}) // false
  *
  * @memberof is
  * @instance
  * @since 1.0.0
  */
-is.prototype.object = function (options) {
+is.prototype.object = function (options = {}) {
+  options = {
+    string: options.string ?? false,
+    empty: options.empty ?? true,
+  };
+
   try {
     const parsed =
       options?.string === true && this.string()
         ? json5.parse(this.actual)
         : this.actual;
 
-    return is.object(parsed);
+    return options.empty === true
+      ? is.object(parsed)
+      : is.object(parsed) && Object.keys(parsed).length > 0;
   } catch {
     return false;
   }

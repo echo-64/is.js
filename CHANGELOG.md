@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2025-07-30
+
+### Added
+- `is(x).in(string)` now supports checking substrings in strings
+- `is(x).array({ empty: false })` add empty option to control empty-array matching
+- `is(x).object({ empty: false })` add empty option to control empty-object matching
+
+### Chore
+- Bumped `rollup` from `^4.44.0` to `^4.46.2`
+
 ## [1.0.1] - 2025-06-24
 
 ### Chore

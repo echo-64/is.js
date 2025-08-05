@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2025-08-05
+
+### Added
+- Add `empty()` instance method - checks if `is.actual` is an empty string, array, or object
+
+### Chore
+- Bumped `typescript` from `^5.8.3` to `^5.9.2`
+
 ## [1.1.0] - 2025-07-30
 
 ### Added

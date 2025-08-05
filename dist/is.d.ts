@@ -86,6 +86,29 @@ declare class is {
         string?: boolean;
     }): boolean;
     /**
+     * Checks if `is.prototype.actual` is an empty string, array or object
+     * with optional behavior for stringified types
+     *
+     * @param {Object} [options] - Optional configration object
+     * @param {boolean} [options.string] - If true, also matches
+     * and checks stringified arrays and objects
+     * @returns {boolean} True if the value is empty; otherwise, false
+     * @throws {Error} If `is.actual` is not a string, array, or object
+     *
+     * @example
+     * is('').empty() // true
+     * is([]).empty() // true
+     * is({}).empty() // true
+     * is('{}').empty({ string: true }) // true
+     *
+     * @memberof is
+     * @instance
+     * @since 1.2.0
+     */
+    empty(options?: {
+        string?: boolean;
+    }): boolean;
+    /**
      * Checks if `is.prototype.actual` is function
      *
      * @returns {boolean}

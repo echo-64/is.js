@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2025-08-07
+
+### Added
+- Moved the api documentation from `gh-pages` to `README.MD`.
+
+### Removed
+- Uninstalled `documentation` and `gh-pages` dependencies.
+
 ## [1.2.0] - 2025-08-05
 
 ### Added

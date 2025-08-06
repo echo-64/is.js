@@ -38,12 +38,9 @@
   ],
   "scripts": {
     "watch": "npx rollup -c -w",
-    "clean": "rm -rf ./dist/* ./docs/*",
+    "clean": "rm -rf ./dist/*",
     "declaration": "npx tsc -p ./tsconfig.declaration.json",
-    "build": "npm run clean && npx rollup -c && npm run declaration",
-    "docs": "npx documentation build ./dist/is.js -f html -o ./docs",
-    "deploy": "npx gh-pages -d ./docs",
-    "all": "npm run build && npm run docs"
+    "build": "npm run clean && npx rollup -c && npm run declaration"
   },
   "dependencies": {
     "json5": "^2.2.3"
@@ -51,8 +48,6 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-terser": "^0.4.4",
-    "documentation": "^14.0.3",
-    "gh-pages": "^6.3.0",
     "rollup": "^4.46.2",
     "rollup-plugin-glob": "^1.0.2",
     "typescript": "^5.9.2"

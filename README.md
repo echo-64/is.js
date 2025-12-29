@@ -4,8 +4,8 @@
   <img src='./is.js.gif' />
 </div>
 
-This module provides utility functions for checking the type of a given value in JavaScript,
-It offers functionality beyond basic typeof checks by supporting "stringified types", which likely means it can handle type checks based on string representations of types or more complex type definitions.
+This module provides utility functions for checking the type of a given value in JavaScript.  
+It goes beyond basic `typeof` checks by supporting “stringified types” , allowing types to be validated using string representations or more advanced type definitions.
 
 ## Features
 

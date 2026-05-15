@@ -20,9 +20,9 @@ import is from '../core.mjs';
  * @instance
  * @since 1.2.0
  */
-is.prototype.empty = function (options = {}) {
+is.prototype.empty = function (options) {
   options = {
-    string: options.string ?? false,
+    string: options?.string ?? false,
   };
 
   const actual_type = is(this.actual);
@@ -34,8 +34,8 @@ is.prototype.empty = function (options = {}) {
   } else if (actual_type.string()) {
     return actual_type.not.string({ empty: false });
   } else {
-    throw new Error(
-      `Invalid 'is.actual' type: expected a string, an array or an object`
+    throw new TypeError(
+      `empty: value must be a string, array or object, but received ${is.type(this.actual)}`,
     );
   }
 };

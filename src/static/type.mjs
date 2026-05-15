@@ -31,85 +31,100 @@ import is from '../core.mjs';
  */
 
 /**
- * **How it works?**
- * > If only `object` parameter is provided, return it's specific type
+ * Figures out what a value actually is. Pass `expected` to check against a specific type, or omit it to get the type back as a string.
  *
- * ```
- * is.type([] | "[]");      // 'array'
- * is.type({} | "{}");      // 'object'
- * is.type(1 | "2");        // 'number'
- * is.type(true | "false"); // 'boolean'
- * is.type("something");    // 'string'
- * is.type(/[0-9]/g);       // 'regexp'
- * ```
- *
- * > If `object` and `expected` are provides, returns boolean with a type predicate
- *
- * ```
- * const arg = process.argv[2];
- *
- * if ( is.type(arg, 'array') ) {
- *   // true and arg is any[]
- * }
- *
- * if ( is.type(arg, 'symbol') ) {
- *   // true and arg is symbol
- * }
- * ```
- *
- * > But wait, actually ( "{}", "[]", "2" ) are strings
- *
- * ```
- * const arg = '{a: 1}'; // 'string'
- *
- * // If `object` is of type 'string'
- * // with `expected` set to 'string'
- * // returns true, regardless it's content
- * is.type(arg, 'string') // true, with 'string' type predicate
- *
- * // via `is.prototype.str`
- * is(arg).string() // true, but no type predicate
- * ```
- *
- * **What the specific type is**
- * > For cli inputs and types wrapped in a string, try to extract and define it's type
+ * By default reads into string content — `'1'` comes back as `'number'`, `'null'` as `'null'`.  
+ * Pass `{ string: false }` to enable Literal Mode, which treats strings as strings but still
+ * correctly identifies `null`, arrays, regexes and other complex structures.
  *
  * @template {Specific} Expected
  *
- * @overload Get
- * @param {*} object - The object whose type is to be checked
- * @returns {Specific | 'unknown'}
+ * @param {*} object - the value to check
+ * @param {Expected} [expected] - the type to check against, e.g. `'array'`, `'null'`
+ * @param {{string: boolean}} [options] - whether to read into string content (`true`, default) or treat strings literally (`false`).
  *
- * @overload Compare with type predicate
- * @param {*} object - The object whose type to be checked
- * @param {Expected} expected - The `object` expected type
- * @returns {object is SpecificMap[Expected]}
+ * @example
+ * // Smart Inference (Default)
+ * is.type('hello'); // 'string'
+ * is.type([1, 2, 3]); // 'array'
+ * is.type('{"number": "8"}'); // 'object' (JSON)
+ * is.type('{number: 8}'); // 'object' (JSON5)
+ * is.type('54848'); // 'number'
+ * is.type(/abc/); // 'regexp'
+ * is.type(null); // 'null'
  *
- * @memberOf is
- * @static
+ * // Literal Mode
+ * is.type('123', { string: false }); // 'string'
+ * is.type('true', { string: false }); // 'string'
+ * is.type('[1, 2, 3]', { string: false }); // 'string'
+ * is.type([1, 2, 3], { string: false }); // 'array'
+ *
+ * @returns {Expected extends Specific ? object is SpecificMap[Expected] : Specific | 'unknown'}
+ * @throws {TypeError} - if `expected` is not a valid type string, or if `options` is not an object
+ *
  * @since 1.0.0
+ * @version 2.0.0
  */
-is.type = function (object, expected) {
-  if (typeof expected === 'string') {
-    if (expected === 'string' && typeof object === 'string') {
-      return true;
-    }
+is.type = function (object, expected, options) {
+  const validTypes = [
+    'string',
+    'number',
+    'boolean',
+    'symbol',
+    'undefined',
+    'null',
+    'object',
+    'function',
+    'array',
+    'regexp',
+  ];
 
-    return extract(object) === expected;
+  if (is.object(expected)) {
+    if (typeof options === 'undefined') {
+      options = expected;
+      expected = undefined;
+    }
   }
 
-  return extract(object);
+  if (!is.object(options) && typeof options !== 'undefined') {
+    throw new TypeError("is.type: 'options' must be an object");
+  }
 
-  function extract(object) {
+  options = {
+    string: options?.string ?? true,
+  };
+
+  if (typeof expected === 'string') {
+    if (expected === '' || !validTypes.includes(expected)) {
+      throw new TypeError(
+        `is.type: 'expected' must be a non-empty string representing a valid type: ${validTypes.toString()}`,
+      );
+    } else if (expected === 'string' && typeof object === 'string') {
+      return true;
+    } else {
+      return parse(object) === expected;
+    }
+  }
+
+  if (typeof expected !== 'undefined') {
+    throw new TypeError(
+      `is.type: 'expected' must be a non-empty string representing a valid type: ${validTypes.toString()}`,
+    );
+  }
+
+  return parse(object);
+
+  function parse(object) {
     const type = is(object);
+    const { string } = options;
 
-    if (type.number({ string: true })) {
+    if (type.number({ string })) {
       return 'number';
-    } else if (type.boolean({ string: true })) {
+    } else if (type.boolean({ string })) {
       return 'boolean';
-    } else if (type.array({ string: true })) {
+    } else if (type.array({ string })) {
       return 'array';
-    } else if (type.object({ string: true })) {
+    } else if (type.object({ string })) {
       return 'object';
     } else if (type.function()) {
       return 'function';
@@ -117,9 +132,9 @@ is.type = function (object, expected) {
       return 'symbol';
     } else if (type.regexp()) {
       return 'regexp';
-    } else if (type.null({ string: true })) {
+    } else if (type.null({ string })) {
       return 'null';
-    } else if (type.undefined({ string: true })) {
+    } else if (type.undefined({ string })) {
       return 'undefined';
     } else if (type.string()) {
       return 'string';

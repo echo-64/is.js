@@ -4,84 +4,190 @@
   <img src='./is.js.gif' />
 </div>
 
-This module provides utility functions for checking the type of a given value in JavaScript.  
-It goes beyond basic `typeof` checks by supporting “stringified types” , allowing types to be validated using string representations or more advanced type definitions.
+<div align='center'>
+  <strong>Semantic type checking for JavaScript.</strong>
+</div>
 
-## Features
+<br />
 
-- **Cross-platform:** Working in both Node.js environments and web browsers.
+JavaScript's type-checking is a mess. `typeof` works fine for primitives, but hand it `null`, an `array`, or a `regexp` — you get `'object'`. Every time. So you end up sprinkling `Array.isArray()`, `instanceof`, and custom string-parsing all over your codebase just to know what you're actually dealing with.
 
-- **Type-predicates:** It leverages TypeScript's type predicate feature to provide strong type checking for JavaScript data.
+`is.js` is a **semantic validator** that gets this right. It handles the cases `typeof` drops the ball on, and goes further — it can look inside strings like `'{"id": "xyz"}'` or `'[1, 2, 3]'` and understand what the data actually means, not just what container it's sitting in. It runs in two modes: **Smart Inference** for when you want it to interpret string content, and **Literal Mode** for when you need strict, no-surprises checks. And if you prefer a chainable style, there's a **fluent API** for that too.
 
-## Installation
+## Contents
 
-#### NodeJs
+- [Quick start (Installation & Usage)](#quick-start)
+- [API Overview](#api-overview)
+- [API Reference](#api-reference)
+- [CHANGELOG](#changelog)
+- [Contributing](#contributing)
+- [License](#license)
 
-```sh
+## Quick start
+
+### Installation
+
+#### Node.js / Bundlers
+
+```bash
 npm install @echo-64/is.js
 ```
 
-#### Browser
+#### Import
 
-In your HTML file, add a `<script>` tag within the `<head>` section, linking to the local file:
-
-```html
-<head>
-  <script src="dist/is.min.js"></script>
-</head>
-```
-
-## Usage
-
-```js
-// commonjs
+```javascript
+// CommonJS
 const is = require('@echo-64/is.js');
 
-// esm
+// ESM
 import is from '@echo-64/is.js';
-
-// browser
-<script src="is.min.js"></script>;
 ```
 
-## API Reference
+### Browser
 
-### `is(actual)`
+For modern browsers, use the ESM build:
 
-- `actual` {any} the variable or expression to be type-checked
-- Returns: {is}
+```html
+<script type="module">
+  import is from 'https://cdn.jsdelivr.net/gh/echo-64/is.js@2.0.0/dist/is.esm.min.js';
+</script>
+```
 
-The primary entry point for all type checks, When called with `actual`, it returns an `is` object
-that provides methods and properties that allow for fluent type assertions
+For legacy browser support, use IIFE build:
 
-> ### **Static-Methods**
+```html
+<script src="https://cdn.jsdelivr.net/gh/echo-64/is.js@2.0.0/dist/is.iife.min.js"></script>
+```
 
-### `is.extend(object)`
+### Usage
 
-- `object` {PluginFunctionMap} plugins object
+#### Smart Inference
 
-Extends `is.prototype`
+> `is.type()` default behavior — reads into string content and infers the actual type. Useful when data comes in as strings like CLI args, config files, or API payloads.
 
-```mjs
+```javascript
+is.type('[1]'); // 'array'
+is.type('123'); // 'number'
+is.type('undefined'); // undefined
+is.type('null'); // null
+is.type('false'); // boolean
+is.type('{ num: 1 }'); // 'object' (JSON5)
+is.type('{ "num": "1" }'); // 'object' (JSON)
+```
+
+#### Literal mode
+
+> Treats strings as strings, period. Still correctly identifies everything `typeof` lumps into `'object'`. Useful when you need strict checks.
+
+```javascript
+const options = { string: false };
+
+is.type('123', options); // 'string'
+is.type('[true]', options); // 'string'
+is.type([true], options); // 'array'
+is.type({ a: 1 }, options); // 'object'
+is.type(/[a-z0-9]/i, options); // 'regexp'
+is.type(null, options); // 'null'
+```
+
+#### Fluent API
+
+> Chainable checks for when you're validating a specific value. Reads almost like plain English.
+
+```javascript
+is(1).in([2, 3]);
+is(['A']).array();
+is('abc').not.empty();
+is(undefined).not.null();
+is({}).eq([{ x: 10 }, {}, { y: 32 }]);
+```
+
+#### Plugins
+
+> Extend `is.js` with your own checks via `is.extend()`.
+
+```javascript
 is.extend({
   uppercase: function () {
-    return this.actual.split('').every(x => x.match(/[A-Z]/));
+    if (typeof this.actual !== 'string' || this.actual === '') {
+      return false;
+    }
+
+    return this.actual === this.actual.toUpperCase();
   },
 });
 
-is('WORD').uppercase(); // true
-is('Word').uppercase(); // false
-is('Word').not.uppercase(); // true
+is('ABC').uppercase(); // true
+is('aBC').not.uppercase(); // true
+```
+
+## API Overview
+
+### Static methods
+
+- [`is.extend(object)`](#isextendobject) — Adds your own custom checks to `is`.
+
+- [`is.type(object[, expected, options])`](#istypeobject-expected-options): Figures out what a value actually is.
+
+- [`is.typeOf(object, expected)`](#istypeofobject-expected): Straight typeof comparison, no extras.
+
+- [`is.representation(object[, expected])`](#isrepresentationobject-expected) — Gets or checks the internal [object Type] string of a value.
+
+- [`is.array(object)`](#isarrayobject) — Because `typeof [] === 'object'` is a lie.
+
+- [`is.object(object)`](#isobjectobject) — Returns `true` only for plain objects, nothing else passes.
+
+### The Fluent API
+
+#### **Type Identification**
+
+- [`.array([options])`](#arrayoptions), [`.boolean([options])`](#booleanoptions), [`.function()`](#function), [`.null([options])`](#nulloptions), [`.number([options])`](#numberoptions), [`.object([options])`](#objectoptions), [`.oftype(expected[, options])`](#oftypeexpected-options), [`.regexp()`](#regexp), [`.representation([expected])`](#representationexpected), [`.string([options])`](#stringoptions), [`.symbol()`](#symbol), [`.undefined([options]`](#undefinedoptions)
+
+#### **Value Checks**
+
+- [`.empty([options])`](#emptyoptions) — Checks if the string, array, or object has nothing in it.
+
+- [`.eq(values, [options])`](#eqvalues-options) — Matches the value against a list, returns true on the first hit.
+
+- [`.in(object[, options])`](#inobject-options) — Looks for the value inside a target `string`, `array`, or `object`.
+
+- [`.nan([options])`](#nanoptions) — Checks if the value is `NaN`.
+
+## API Reference
+
+### `is.extend(object)`
+
+- `object` {PluginFunctionMap} — a map of method names to their implementation functions
+
+Adds your own custom checks to `is`.
+
+```javascript
+is.extend({
+  url: function () {
+    if (typeof this.actual !== 'string') {
+      return false;
+    }
+
+    try {
+      new URL(this.actual);
+      return true;
+    } catch {
+      return false;
+    }
+  },
+});
+
+is('https://somewebsite.com/').url(); // true
 ```
 
 ### `is.array(object)`
 
-- `object` {any} The object to check
+- `object` {any} — the value to check
 - Returns: `object is any[]`
 
-Validates with type predicate if `object` is an array
+Checks if the value is an array.
 
-```mjs
+```javascript
 const x: unknown = ...;
 
 if (is.array(x)) {
@@ -89,92 +195,71 @@ if (is.array(x)) {
 }
 ```
 
-### `is.object()`
+### `is.object(object)`
 
-- `object` {any} the object to check
+- `object` {any} — the value to check
 - Returns: {boolean}
 
-Validates if `object` is a plain object
+Returns `true` only for plain `{}` objects. Fails for `null`, arrays, class instances, anything that isn't a literal plain object.
 
-```mjs
+```javascript
 is.object({ a: 1 }); // true
-is.object(new Something()); // false`
+is.object(new Something()); // false
 ```
 
 ### `is.representation(object[, expected])`
 
-- `object` the object to check
-- `expected` expected string representation to compare against `object` string representation
-- Returns: {Representation|boolean}
+- `object` {any} — the value to check
+- `expected` {string} — the representation string to compare against, e.g. `'[object Null]'`
+- Returns: {Representation | boolean} — the representation string if `expected` is omitted, otherwise a boolean
 
-Get the string representation of `object` and optionaly compare it against `expected`
+Gets or checks the internal `[object Type]` string of a value.
 
-```mjs
+```javascript
 is.representation(null); // '[object Null]'
 is.representation(true, '[object Boolean]'); // true
 ```
 
-### `is.type(object[, expected])`
+### `is.type(object[, expected, options])`
 
-- `object` {any} the object whose type is to be checked
-- `expected` {Expected} the `object` expected type
-- Returns: {Specific|'unknown'|object is SpecificMap[Expected]}
+- `object` {any} — the value to check
+- `expected` {Expected} — the type to check against, e.g. `'array'`, `'boolean'`
+- `options` {string: boolean}
+  - `string` {boolean} — whether to read into string content (`true`, default) or treat strings literally (`false`)
+- Throws: {TypeError} — if `expected` is not a valid type string, or if `options` is not an object
+- Returns: {Specific | 'unknown' | object is SpecificMap[Expected]}
 
-**How it works?**
+Figures out what a value actually is. Pass `expected` to check against a specific type, or omit it to get the type back as a string.
 
-- If only `object` parameter is provided, return it's specific type
+By default reads into string content — `'1'` comes back as `'number'`, `'[]'` as `'array'`.
+Pass `{ string: false }` to enable Literal Mode, which treats strings as strings but still gets everything else typeof gets wrong.
 
-```mjs
-is.type([] | '[]'); // 'array'
-is.type({} | '{}'); // 'object'
-is.type(1 | '2'); // 'number'
-is.type(true | 'false'); // 'boolean'
-is.type('something'); // 'string'
-is.type(/[0-9]/g); // 'regexp'
+```javascript
+// Smart Inference (Default)
+is.type('hello'); // 'string'
+is.type([1, 2, 3]); // 'array'
+is.type('{"number": "8"}'); // 'object' (JSON)
+is.type('{number: 8}'); // 'object' (JSON5)
+is.type('1234'); // 'number'
+is.type(/abc/); // 'regexp'
+is.type(null); // 'null'
+
+// Literal Mode
+is.type('123', { string: false }); // 'string'
+is.type('true', { string: false }); // 'string'
+is.type('[1, 2, 3]', { string: false }); // 'string'
+is.type([1, 2, 3], { string: false }); // 'array'
 ```
-
-- If `object` and `expected` are provides, returns boolean with a type predicate
-
-```mjs
-const arg = process.argv[2];
-
-if (is.type(arg, 'array')) {
-  // true and arg is any[]
-}
-
-if (is.type(arg, 'object')) {
-  // true and arg is object
-}
-```
-
-- But wait, actually ( `"{}"`, `"[]"`, `"2"` ) are strings
-
-```mjs
-const arg = '{a: 1}'; // 'string'
-
-// If `object` is of type 'string'
-// with `expected` set to 'string'
-// returns true, regardless it's content
-is.type(arg, 'string'); // true, with 'string' type predicate
-
-// via `is.prototype.string`
-is(arg).string(); // true, but no type predicate
-```
-
-- What the **specific** type is
-  - when check `[]`, `{}` and `null` via `typeof` it returns `object`, in is.js the specific type for `[]` is `array` and `{}` is object, and so on
-- What the **stringified** type is
-  - For cli inputs, and data types that wrapped in a string (stringified type), try to extract and define it's type
 
 ### `is.typeOf(object, expected)`
 
-- `object` {any} the object whose type to be checked
-- `expected` {Expected} the `object` expected type
+- `object` {any} — the value to check
+- `expected` {Expected} — the `typeof` type string to compare against, e.g. `'string'`, `'object'`
 - Returns: {object is TypeofMap[Expected]}
 
-Check with type predicate if the typeof `object` is the same type of `expected`
+Straight `typeof` comparison. No smart inference, no extras.
 
-```mjs
+```javascript
 is.typeOf(['a'], 'object'); // true
 is.typeOf({ a: 0 }, 'object'); // true
 is.typeOf(null, 'object'); // true
@@ -183,17 +268,22 @@ is.typeOf(0, 'number'); // true
 is.typeOf(false, 'boolean'); // true
 ```
 
-> ### **Instance-Methods**
+### `is(actual)`
+
+- `actual` {any} — the value to check
+- Returns: {is}
+
+Wraps a value and gives you access to all the fluent instance methods.
 
 ### `.actual`
 
-The `actual` property is the parameter passed to `is` e.g. `is(actual)`
+The value you passed into `is()`.
 
 ### `.not`
 
-The `not` property has the negated prototype version of `is` instance methods
+Negates the next method call.
 
-```mjs
+```javascript
 const x = '';
 is(x).string(); // true
 is(x).not.string(); // false
@@ -202,16 +292,14 @@ is(x).not.string({ empty: false }); // true
 
 ### `.array([options])`
 
-- `options` {object} optional configration object
-  - `string` {boolean} If true also considers stringified array e.g. `'[1, 2]'` as valid array matches
-  - `empty` {boolean} If false considers empty array `[]` as invalid array matches
+- `options` {object}
+  - `string` {boolean} — if `true`, also accepts stringified arrays like `'[1, 2]'`
+  - `empty` {boolean} — if `false`, empty arrays don't pass
+- Returns: {boolean}
 
-Returns: {boolean}
+Checks if the value is an array.
 
-Checks if `is.prototype.actual` is an array,
-with optional behavior for stringified arrays and empty ones
-
-```mjs
+```javascript
 is(['A']).array(); // true
 is('[1]').array({ string: true }); // true
 is([]).array({ empty: false }); // false
@@ -219,64 +307,76 @@ is([]).array({ empty: false }); // false
 
 ### `.boolean([options])`
 
-- `options` {object} optional configration object
-  - `string` {boolean} If true, also considers `'true'` and `'false'` as valid boolean matches
+- `options` {object}
+  - `string` {boolean} — if `true`, also accepts `'true'` and `'false'` as valid
+- Returns: {boolean}
 
-Returns: {boolean}
+Checks if the value is a boolean.
 
-Checks if `is.prototype.actual` is a boolean (`true` or `false`)
-with optional behavior for stringified boolean
-
-```mjs
+```javascript
 is(true).boolean(); // true
 is('false').boolean({ string: true }); // true
 ```
 
 ### `.empty([options])`
 
-- `options` {object} optional configration object
-  - `string` {boolean} If true, also matches and checks stringified arrays and objects
+- `options` {object}
+  - `string` {boolean} — if `true`, also checks stringified arrays and objects
+- Throws: {TypeError} — if the value is not a string, array, or object
+- Returns: {boolean}
 
-Throws: {Error} if `is.prototype.actual` is not a string, array, or object
-<br />
-Returns: {boolean}
+Checks if the value is empty. Works for strings, arrays, and objects.
 
-Checks if `is.prototype.actual` is an empty string, array or object
-with optional behavior for stringified types
+```javascript
+is('').empty(); // true
+is([]).empty(); // true
+is({}).empty(); // true
+is('{}').empty({ string: true }); // true
+```
 
-```mjs
-is(true).boolean(); // true
-is('false').boolean({ string: true }); // true
+### `.eq(values[, options])`
+
+- `values` {array} — list of values to compare against
+- `options` {object}
+  - `strict` {boolean} — if `true`, uses `===` instead of `==`, defaults to `false`
+- Throws: {TypeError} — if `values` not an array
+- Returns: {boolean}
+
+Checks if the value matches any entry in the list.
+
+```javascript
+is(1).eq([1, 2, 3]); // true
+is('1').eq([1, 2, 3]); // true
+is('1').eq([1, 2, 3], { strict: true }); // false
+is({ a: 1 }).eq([{ a: 1 }], { strict: true }); // false (different reference)
 ```
 
 ### `.function()`
 
-Returns: {boolean}
+- Returns: {boolean}
 
-Checks if `is.prototype.actual` is a function
+Checks if the value is a function.
 
-```mjs
+```javascript
 is(function () {}).function(); // true
 is(() => {}).function(); // true
 ```
 
 ### `.in(object[, options])`
 
-- `object` {any} object to search in
-- `options` {object} optional configration object
-  - `mode` {'all' | 'own'} if `'own'` check only the object direct properties
-    (ownProperties) not inherited, **Defaults:** 'all'
+- `object` {any} — the target to search in
+- `options` {object}
+  - `mode` {'all' | 'own'} — if `'own'`, only checks direct properties, not inherited ones. Defaults to `'all'`
+- Returns: {boolean}
 
-Returns: {boolean}
+Checks if the value exists in a string, array, or object.
 
-Determines if `is.prototype.actual` in `object`, `array` or `string`,
-with optional strict check for `object` ownProperties
-
-```mjs
+```javascript
 const str = 'a b c';
 const arr = [1, 'a', true];
-const abj1 = { one: 1 };
+const obj1 = { one: 1 };
 const obj2 = Object.create(obj1);
+
 obj2.tow = 2;
 
 is('b').in(str); // true
@@ -289,16 +389,13 @@ is('tow').in(obj2, { mode: 'own' }); // true
 
 ### `.nan([options])`
 
-- `options` {object} optional configration object
-  - `strict` {boolean} if true, check `is.prototype.actual` is exactly `NaN`
-    without coerces to a number before checking
+- `options` {object}
+  - `strict` {boolean} — if `true`, checks for exactly `NaN` without coercing first. Defaults to `false`
+- Returns: {boolean}
 
-Returns: {boolean}
+Checks if the value is `NaN`. By default coerces the value to a number first.
 
-Checks if `is.prototype.actual` is NaN, by default coerces the input to a number first
-with optional behavior for skips coercion (exact NaN check)
-
-```mjs
+```javascript
 is('a').nan(); // true
 is(NaN).nan({ strict: true }); // true
 is('a').nan({ strict: true }); // false
@@ -306,63 +403,56 @@ is('a').nan({ strict: true }); // false
 
 ### `.null([options])`
 
-- `options` {object} optional configration object
-  - `string` {boolean} if true, also considers the stringified null `"null"`
-    as valid null matches
+- `options` {object}
+  - `string` {boolean} — if `true`, also accepts `'null'`
+- Returns: {boolean}
 
-Returns: {boolean}
+Checks if the value is `null`.
 
-Checks if `is.prototype.actual` is null, with optional behavior for stringified null
-
-```mjs
+```javascript
 is(null).null(); // true
 is('null').null({ string: true }); // true
 ```
 
 ### `.number([options])`
 
-- `options` {object} optional configration object
-  - `string` {boolean} if true, considers stringified numbers as valid, otherwise checks
-    for number type
+- `options` {object}
+  - `string` {boolean} — if `true`, also accepts stringified numbers like `'123'`
+- Returns: {boolean}
 
-Returns: {boolean}
+Checks if the value is a number.
 
-Checks if `is.prototype.actual` is a number, with optional behavior for stringified numbers
-
-```mjs
+```javascript
 is(1).number(); // true
 is('2').number({ string: true }); // true
 ```
 
 ### `.object([options])`
 
-- `options` {object} optional configration object
-  - `string` {boolean} if true, also considers the stringified object `"{...}"`
-    as valid object matches
-  - `empty` {boolean} if false, considers empty object `{}` as invalid object matches
+- `options` {object}
+  - `string` {boolean} — if `true`, also accepts stringified objects like `'{a: 1}'`
+  - `empty` {boolean} — if `false`, empty objects `{}` don't pass
+- Returns: {boolean}
 
-Returns: {boolean}
+Returns `true` only for plain objects, nothing else passes.
 
-Checks if `is.prototype.actual` is object, with optional behavior for stringified objects and empty ones
-
-```mjs
-is({ a: 1 }).object(); // true
-is('{a: 1}').object({ string: true }); // true
-is('{"a": "1"}').object({ string: true }); // true
+```javascript
+is({ id: 10 }).object(); // true
+is('{"id": "10"}').object({ string: true }); // true (JSON)
+is('{id: 10}').object({ string: true }); // true (JSON5)
 is({}).object({ empty: false }); // false
 ```
 
 ### `.oftype(expected[, options])`
 
-- `expected` {Specific} the expected type of `is.prototype.actual`
-- `options` {object} optional configuration object
-  - `string` if true, considers stringified values as valid, otherwise checks for `expected` type
+- `expected` {Specific} — the type to check against, e.g. `'string'`, `'boolean'`
+- `options` {object}
+  - `string` {boolean} — if `true`, reads into string content like `is.type()` does by default
+- Returns: {boolean}
 
-Returns: {boolean}
+Checks if the value is of type `expected`. The fluent version of `is.type()`.
 
-Check weather `is.prototype.actual` is type of `expected`, with optional stringified types matches
-
-```mjs
+```javascript
 is('value').oftype('string'); // true
 is(true).oftype('boolean'); // true
 is('1').oftype('number', { string: true }); // true
@@ -370,26 +460,23 @@ is('1').oftype('number', { string: true }); // true
 
 ### `.regexp()`
 
-Returns: {boolean}
+- Returns: {boolean}
 
-Checks if the type of `is.prototype.actual` is `RegExp`
+Checks if the value is a `RegExp`.
 
-```mjs
+```javascript
 is(/[a-z]/g).regexp(); // true
 is(new RegExp(/0-9/, 'g')).regexp(); // true
 ```
 
 ### `.representation([expected])`
 
-- `expected` {Representation} string representation of a type e.g. `"[object Boolean]"`
+- `expected` {Representation} — the representation string to compare against, e.g. `'[object Null]'`
+- Returns: {Representation | boolean} — the representation string if `expected` is omitted, otherwise a boolean
 
-Returns: {Representation|boolean}
+Gets or checks the internal `[object Type]` string of a value.
 
-Returns either the string representation of `is.prototype.actual` (if expected is omitted)
-or a boolean value indicating whether the string representations of `is.prototype.actual`
-and `expected` are equal
-
-```mjs
+```javascript
 is('AB').representation(); // '[object String]'
 is(null).representation('[object Null]'); // true
 is([12]).representation('[object Null]'); // false
@@ -397,38 +484,36 @@ is([12]).representation('[object Null]'); // false
 
 ### `.string([options])`
 
-- `options` {object} optional configration object
-  - `empty` {boolean} match empty string `''`, **Default:** `true`
+- `options` {object}
+  - `empty` {boolean} — if `false`, empty strings don't pass. Defaults to `true`
+- Returns: {boolean}
 
-Returns: {boolean}
+Checks if the value is a string.
 
-Checks if `is.prototype.actual` is a string, with optional behavior for empty strings
-
-```mjs
+```javascript
 is('value').string(); // true
 is('').string({ empty: false }); // false
 ```
 
 ### `.symbol()`
 
-Returns: {boolean}
+- Returns: {boolean}
 
-Checks if `is.prototype.actual` is a symbol
+Checks if the value is a symbol.
 
-```mjs
+```javascript
 is(Symbol()).symbol(); // true
 ```
 
 ### `.undefined([options])`
 
-- `options` {object} optional configration object
-  - `string` {boolean} if true, also considers the stringified undefined as valid matches
+- `options` {object}
+  - `string` {boolean} — if `true`, also accepts `'undefined'`
+- Returns: {boolean}
 
-Returns: {boolean}
+Checks if the value is `undefined`.
 
-Checks if `is.prototype.actual` is undefined, with optional behavior for stringified
-
-```mjs
+```javascript
 is().undefined(); // true
 is(undefined).undefined(); // true
 is('undefined').undefined({ string: true }); // true
@@ -437,6 +522,10 @@ is('undefined').undefined({ string: true }); // true
 ## CHANGELOG
 
 [CHANGELOG.md](./CHANGELOG.md)
+
+## Contributing
+
+All contributions are welcome. For bug fixes or small improvements, just open a PR — make sure your code is formatted with Prettier. For anything bigger — new features, API changes, or just want to discuss an idea — open an issue first so we can talk it through before you put in the work.
 
 ## License
 

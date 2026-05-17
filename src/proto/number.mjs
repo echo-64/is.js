@@ -1,17 +1,15 @@
 import is from '../core.mjs';
 
 /**
- * Checks if `is.prototype.actual` is number,
- * with optional behavior for string number
+ * Checks if the value is a number.
  *
- * @param {object} [options] - Optional configuration object
- * @param {boolean} [options.string] - If true considers string values that can be
- * converted to a number as valid otherwise checks for number type
+ * @param {object} [options]
+ * @param {boolean} [options.string] - if `true`, also accepts stringified numbers like `'123'`
  *
  * @returns {boolean}
  *
  * @example
- * is(1).number() // true
+ * is(1).number()                 // true
  * is('2').number({string: true}) // true
  *
  * @memberof is

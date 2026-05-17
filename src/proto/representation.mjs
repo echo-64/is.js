@@ -1,9 +1,7 @@
 import is from '../core.mjs';
 
 /**
- * Returns either the string representation of `is.prototype.actual` (if expected is omitted)
- * or a boolean value indicating whether the string representations of `is.prototype.actual`
- * and `expected` are equal
+ * Gets or checks the internal `[object Type]` string of a value.
  *
  * @overload Get
  * @returns {Representation}
@@ -11,7 +9,7 @@ import is from '../core.mjs';
  * is('abc').representation() // '[object String]'
  *
  * @overload Compare
- * @param {Representation} expected - Object string representation e.g `"[object Boolean]"`
+ * @param {Representation} expected - the representation string to compare against, e.g. `'[object Null]'`
  * @returns {boolean}
  * @example
  * is(null).representation("[object Null]") // true

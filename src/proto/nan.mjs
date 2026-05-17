@@ -1,16 +1,14 @@
 import is from '../core.mjs';
 
 /**
- * Checks if `is.prototype.actual` is NaN, by default coerces the input to a number first
- * with optional behavior for skips coercion (exact NaN check)
+ * Checks if the value is `NaN`. By default coerces the value to a number first.
  *
- * @param {object} [options] - Optional configration object
- * @param {boolean} [options.strict] - If true, check `is.prototype.actual` is exactly `NaN`
- * without coerces to a number before checking
+ * @param {object} [options]
+ * @param {boolean} [options.strict] - if `true`, checks for exactly `NaN` without coercing first. Defaults to `false`
  * @returns {boolean}
  *
  * @example
- * is('a').nan() // true
+ * is('a').nan()               // true
  * is(NaN).nan({strict: true}) // true
  * is('a').nan({strict: true}) // false
  *

@@ -33,31 +33,30 @@ import is from '../core.mjs';
 /**
  * Figures out what a value actually is. Pass `expected` to check against a specific type, or omit it to get the type back as a string.
  *
- * By default reads into string content — `'1'` comes back as `'number'`, `'null'` as `'null'`.  
- * Pass `{ string: false }` to enable Literal Mode, which treats strings as strings but still
- * correctly identifies `null`, arrays, regexes and other complex structures.
+ * By default reads into string content — `'1'` comes back as `'number'`, `'[]'` as `'array'`.
+ * Pass `{ string: false }` to enable Literal Mode, which treats strings as strings but still gets everything else typeof gets wrong.
  *
  * @template {Specific} Expected
  *
  * @param {*} object - the value to check
- * @param {Expected} [expected] - the type to check against, e.g. `'array'`, `'null'`
+ * @param {Expected} [expected] - the type to check against, e.g. `'array'`, `'boolean'`
  * @param {{string: boolean}} [options] - whether to read into string content (`true`, default) or treat strings literally (`false`).
  *
  * @example
  * // Smart Inference (Default)
- * is.type('hello'); // 'string'
- * is.type([1, 2, 3]); // 'array'
+ * is.type('hello');           // 'string'
+ * is.type([1, 2, 3]);         // 'array'
  * is.type('{"number": "8"}'); // 'object' (JSON)
- * is.type('{number: 8}'); // 'object' (JSON5)
- * is.type('54848'); // 'number'
- * is.type(/abc/); // 'regexp'
- * is.type(null); // 'null'
+ * is.type('{number: 8}');     // 'object' (JSON5)
+ * is.type('1234');            // 'number'
+ * is.type(/abc/);             // 'regexp'
+ * is.type(null);              // 'null'
  *
  * // Literal Mode
- * is.type('123', { string: false }); // 'string'
- * is.type('true', { string: false }); // 'string'
+ * is.type('123', { string: false });       // 'string'
+ * is.type('true', { string: false });      // 'string'
  * is.type('[1, 2, 3]', { string: false }); // 'string'
- * is.type([1, 2, 3], { string: false }); // 'array'
+ * is.type([1, 2, 3], { string: false });   // 'array'
  *
  * @returns {Expected extends Specific ? object is SpecificMap[Expected] : Specific | 'unknown'}
  * @throws {TypeError} - if `expected` is not a valid type string, or if `options` is not an object

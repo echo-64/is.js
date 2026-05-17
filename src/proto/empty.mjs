@@ -1,19 +1,17 @@
 import is from '../core.mjs';
 
 /**
- * Checks if `is.prototype.actual` is an empty string, array or object
- * with optional behavior for stringified types
+ * Checks if the value is empty. Works for strings, arrays, and objects.
  *
- * @param {Object} [options] - Optional configration object
- * @param {boolean} [options.string] - If true, also matches
- * and checks stringified arrays and objects
- * @returns {boolean} True if the value is empty; otherwise, false
- * @throws {Error} If `is.actual` is not a string, array, or object
+ * @param {Object} [options]
+ * @param {boolean} [options.string] - if `true`, also checks stringified arrays and objects
+ * @throws {TypeError} if the value is not a string, array, or object
+ * @returns {boolean}
  *
  * @example
- * is('').empty() // true
- * is([]).empty() // true
- * is({}).empty() // true
+ * is('').empty()                   // true
+ * is([]).empty()                   // true
+ * is({}).empty()                   // true
  * is('{}').empty({ string: true }) // true
  *
  * @memberof is

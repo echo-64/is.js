@@ -1,13 +1,11 @@
 import is from '../core.mjs';
 
 /**
- * Determines if `is.prototype.actual` in `object`, `array` or `string`,
- * with optional strict check for `object` ownProperties
+ * Checks if the value exists in a string, array, or object.
  *
- * @param {*} object - Object to search in
- * @param {object} [options] - Optional configration object
- * @param {'all' | 'own'} [options.mode] - If 'own' check only the object direct properties
- * (ownProperties) not inherited, defaults to 'all'
+ * @param {*} object - the target to search in
+ * @param {object} [options]
+ * @param {'all' | 'own'} [options.mode] - if `'own'`, only checks direct properties, not inherited ones. Defaults to `'all'`
  * @returns {boolean}
  *
  * @example
@@ -17,10 +15,10 @@ import is from '../core.mjs';
  * const obj2 = Object.create(obj1);
  * obj2.tow = 2;
  *
- * is('b').in(str) // true
- * is('a').in(arr) // true
- * is('one').in(obj2) // true
- * is('tow').in(obj2) // true
+ * is('b').in(str)                   // true
+ * is('a').in(arr)                   // true
+ * is('one').in(obj2)                // true
+ * is('tow').in(obj2)                // true
  * is('one').in(obj2, {mode: 'own'}) // false
  * is('tow').in(obj2, {mode: 'own'}) // true
  *

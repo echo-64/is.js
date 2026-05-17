@@ -1,15 +1,14 @@
 import is from '../core.mjs';
 
 /**
- * Checks if `is.prototype.actual` is string,
- * with optional behavior for empty strings
+ * Checks if the value is a string.
  *
- * @param {object} [options] - Optional configration object
- * @param {boolean} [options.empty] - Match empty string "" , defaults to `true`
+ * @param {object} [options]
+ * @param {boolean} [options.empty] - if `false`, empty strings don't pass. Defaults to `true`
  * @returns {boolean}
  *
  * @example
- * is('value').string() // true
+ * is('value').string()          // true
  * is('').string({empty: false}) // false
  *
  * @memberof is

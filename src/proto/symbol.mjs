@@ -1,7 +1,7 @@
 import is from '../core.mjs';
 
 /**
- * Checks if `is.prototype.actual` is symbol
+ * Checks if the value is a symbol.
  *
  * @returns {boolean}
  *

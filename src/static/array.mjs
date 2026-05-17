@@ -1,9 +1,9 @@
 import is from '../core.mjs';
 
 /**
- * Validates with type predicate if `object` is array
+ * Checks if the value is an array.
  *
- * @param {*} object - The object to check
+ * @param {*} object - the value to check
  * @returns {object is any[]}
  *
  * @example

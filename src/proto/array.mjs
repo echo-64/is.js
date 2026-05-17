@@ -2,20 +2,17 @@ import is from '../core.mjs';
 import json5 from 'json5';
 
 /**
- * Checks if `is.prototype.actual` is array,
- * with optional behavior for string array and empty ones
+ * Checks if the value is an array.
  *
- * @param {object} [options] - Optional configration object
- * @param {boolean} [options.string] - If true, also considers
- * the string array `"[...]"` as valid array matches
- * @param {boolean} [options.empty] - If false, considers
- * empty array `[]` as invalid array matches
+ * @param {object} [options]
+ * @param {boolean} [options.string] - if `true`, also accepts stringified arrays like `'[1, 2]'`
+ * @param {boolean} [options.empty] - if `false`, empty arrays don't pass
  * @returns {boolean}
  *
  * @example
- * is(['A']).array() // true
+ * is(['A']).array()               // true
  * is('[1]').array({string: true}) // true
- * is([]).array({empty: false}) // false
+ * is([]).array({empty: false})    // false
  *
  * @memberof is
  * @instance

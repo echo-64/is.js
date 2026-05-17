@@ -1,14 +1,14 @@
 import is from '../core.mjs';
 
 /**
- * Validates if `object` is a plain object
+ * Returns true only for plain {} objects. Fails for null, arrays, class instances, anything that isn't a literal plain object.
  *
- * @param {*} object - The object to check
+ * @param {*} object - the value to check
  * @returns {boolean}
  *
  * @example
  * is.object({ a: 1 })        // true
- * is.object(new Something()) // false`
+ * is.object(new Something()) // false
  *
  * @memberOf is
  * @static

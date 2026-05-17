@@ -5,18 +5,17 @@ import is from '../core.mjs';
  */
 
 /**
- * Get the string representation of `object`
- * and optionaly compare it against `expected`
+ * Gets or checks the internal [object Type] string of a value.
  *
  * @overload Get
- * @param {*} object - The object to check
+ * @param {*} object - the value to check
  * @returns {Representation}
  * @example
  * is.representation(null) // '[object Null]'
  *
  * @overload Compare
- * @param {*} object - The object to check
- * @param {Representation} expected - e.g `"[object Boolean]"`
+ * @param {*} object - the value to check
+ * @param {Representation} expected - the representation string to compare against, e.g. `'[object Null]'`
  * @returns {boolean}
  * @example
  * is.representation(true, '[object Boolean]') // true

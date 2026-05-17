@@ -1,9 +1,9 @@
 /**
- * `is.js`
+ * Wraps a value and gives you access to all the fluent instance methods.
  *
  * @constructor
- * @param {*} actual - something to check
- * @returns {is} is instance
+ * @param {*} actual - the value to check
+ * @returns {is}
  * @version 1.0.0
  */
 function is(actual) {
@@ -12,7 +12,7 @@ function is(actual) {
   }
 
   /**
-   * The `actual` property is the parameter passed to `is`
+   * The value you passed into `is()`.
    *
    * @memberof is
    * @instance
@@ -21,7 +21,7 @@ function is(actual) {
   this.actual = actual;
 
   /**
-   * The `not` property has the negated version of `is.prototype`
+   * Negates the next method call.
    *
    * @example
    * const x = '';
@@ -37,7 +37,7 @@ function is(actual) {
   this.not = {};
 
   for (const func of Object.getOwnPropertyNames(
-    Object.getPrototypeOf(this)
+    Object.getPrototypeOf(this),
   ).filter(i => i != 'constructor')) {
     this.not[func] = (object, options) => !this[func](object, options);
   }
@@ -45,8 +45,8 @@ function is(actual) {
 
 /**
  * @callback ExtendCallBack
- * @param {*} [options] - Optional options parameter
- * @param {*} [config] - Optional config parameter
+ * @param {*} [options]
+ * @param {*} [config]
  * @returns {boolean}
  */
 
@@ -55,20 +55,28 @@ function is(actual) {
  */
 
 /**
- * Extend `is.prototype`
+ * Adds your own custom checks to is.
  *
- * @param { PluginFunctionMap } object - plugins object
+ * @param { PluginFunctionMap } object - a map of method names to their implementation functions
  *
  * @example
  * is.extend({
- *   uppercase: function () {
- *     return this.actual.split('').every(x => x.match(/[A-Z]/));
- *   }
+ *   url: function () {
+ *     if (typeof this.actual !== 'string') {
+ *       return false;
+ *     }
+ * 
+ *     try {
+ *       new URL(this.actual);
+ *       return true;
+ *     } catch {
+ *       return false;
+ *     }
+ *   },
  * });
- *
- * is('WORD').uppercase()     // true
- * is('Word').uppercase()     // false
- * is('Word').not.uppercase() // true
+ * 
+ * is('https://somewebsite.com/').url(); // true
+
  *
  * @memberof is
  * @static

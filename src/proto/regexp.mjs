@@ -1,12 +1,12 @@
 import is from '../core.mjs';
 
 /**
- * Checks if `is.prototype.actual` is RegExp
+ * Checks if the value is a `RegExp`.
  *
  * @returns {boolean}
  *
  * @example
- * is(/[a-z]/g).regexp() // true
+ * is(/[a-z]/g).regexp()               // true
  * is(new RegExp(/0-9/, 'g')).regexp() // true
  *
  * @memberof is

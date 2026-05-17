@@ -1,12 +1,13 @@
 import is from '../core.mjs';
 
 /**
- * Checks if `is.prototype.actual` is function
+ * Checks if the value is a function.
  *
  * @returns {boolean}
  *
  * @example
- * is(() => {}).function() // true
+ * is(function () {}).function(); // true
+ * is(() => {}).function();       // true
  *
  * @memberof is
  * @instance

@@ -1,18 +1,16 @@
 import is from '../core.mjs';
 
 /**
- * Check weather `is.prototype.actual` is type of `expected`,
- * with optional string type matches
+ * Checks if the value is of type `expected`. The fluent version of `is.type()`.
  *
- * @param {Specific} expected - The expected type
- * @param {object} [options] - Optional configuration object
- * @param {boolean} [options.string] - If true considers string values that can be
- * converted to `expected` type as valid otherwise checks for `expected` type
+ * @param {Specific} expected - the type to check against, e.g. `'string'`, `'boolean'`
+ * @param {object} [options]
+ * @param {boolean} [options.string] - if `true`, reads into string content like `is.type()` does by default
  * @returns {boolean}
  *
  * @example
- * is('value').oftype('string') // true
- * is(true).oftype('boolean') // true
+ * is('value').oftype('string')             // true
+ * is(true).oftype('boolean')               // true
  * is('1').oftype('number', {string: true}) // true
  *
  * @memberof is

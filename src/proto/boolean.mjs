@@ -1,16 +1,14 @@
 import is from '../core.mjs';
 
 /**
- * Checks if `is.prototype.actual` is boolean (true | false)
- * with optional behavior for string boolean
+ * Checks if the value is a boolean.
  *
- * @param {Object} [options] - Optional configration object
- * @param {boolean} [options.string] - If true, also considers
- * the strings 'true' and 'false' as valid boolean matches
+ * @param {Object} [options]
+ * @param {boolean} [options.string] - if `true`, also accepts `'true'` and `'false'` as valid
  * @returns {boolean}
  *
  * @example
- * is(true).boolean() // true
+ * is(true).boolean()                  // true
  * is('false').boolean({string: true}) // true
  *
  * @memberof is

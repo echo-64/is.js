@@ -27,21 +27,21 @@ import is from '../core.mjs';
  */
 
 /**
- * Check with type predicate if `object` is typeof `expected`
+ * Straight `typeof` comparison. No smart inference, no extras.
  *
  * @template {Typeof} Expected
  *
- * @param {*} object - The object whose type to be checked
- * @param {Expected} expected - The `object` expected type
+ * @param {*} object - the value to check
+ * @param {Expected} expected - the `typeof` type string to compare against, e.g. `'string'`, `'object'`
  * @returns {object is TypeofMap[Expected]}
  *
  * @example
- * is.typeOf(['a'], 'object')  // true
- * is.typeOf({a: 0}, 'object') // true
- * is.typeOf(null, 'object')   // true
- * is.typeOf('xyz', 'string')  // true
- * is.typeOf(0, 'number')      // true
- * is.typeOf(false, 'boolean') // true
+ * is.typeOf(['a'], 'object');    // true
+ * is.typeOf({ a: 0 }, 'object'); // true
+ * is.typeOf(null, 'object');     // true
+ * is.typeOf('xyz', 'string');    // true
+ * is.typeOf(0, 'number');        // true
+ * is.typeOf(false, 'boolean');   // true
  *
  * @memberOf is
  * @static

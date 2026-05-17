@@ -1,17 +1,15 @@
 import is from '../core.mjs';
 
 /**
- * Checks if `is.prototype.actual` is undefined,
- * with optional behavior for string undefined
+ * Checks if the value is `undefined`.
  *
- * @param {object} [options] - Optional configration object
- * @param {boolean} [options.string] - If true, also considers the string undefined "undefined"
- * as valid undefined matches
+ * @param {object} [options]
+ * @param {boolean} [options.string] - if `true`, also accepts `'undefined'`
  * @returns {boolean}
  *
  * @example
- * is().undefined() // true
- * is(undefined).undefined() // true
+ * is().undefined()                          // true
+ * is(undefined).undefined()                 // true
  * is('undefined').undefined({string: true}) // true
  *
  * @memberof is

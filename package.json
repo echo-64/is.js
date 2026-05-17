@@ -1,12 +1,15 @@
 {
   "name": "@echo-64/is.js",
-  "version": "1.2.1",
-  "description": "Tiny JS Type Checker Module for Node & Browser — Supports Stringified Types",
+  "version": "2.0.0",
+  "description": "Semantic type checking for JavaScript.",
   "author": "𝖊𝖈𝖍𝖔 <https://github.com/echo-64>",
   "license": "MIT",
-  "main": "./dist/is.js",
-  "module": "./dist/is.mjs",
-  "browser": "./dist/is.min.js",
+  "main": "./dist/is.cjs.min.js",
+  "module": "./dist/is.esm.node.js",
+  "browser": {
+    "import": "./dist/is.esm.min.js",
+    "default": "./dist/is.iife.min.js"
+  },
   "types": "./dist/is.d.ts",
   "exports": {
     ".": {
@@ -18,6 +21,9 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/echo-64/is.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/echo-64/is.js/issues"
   },
   "publishConfig": {
     "access": "public"
@@ -32,9 +38,18 @@
     "./package-lock.json"
   ],
   "keywords": [
-    "check",
-    "type-safe",
-    "type-check"
+    "type-checking",
+    "type-validation",
+    "semantic-validation",
+    "type-integrity",
+    "context-aware",
+    "type-inference",
+    "type-predicates",
+    "javascript-utils",
+    "fluent-api",
+    "validation",
+    "semantic",
+    "typeof"
   ],
   "scripts": {
     "watch": "npx rollup -c -w",

@@ -1,12 +1,12 @@
 {
-  "include": ["./dist/is.js"],
-  "exclude": ["./dist/*.{js,mjs,ts}"],
+  "include": ["./dist/is.cjs.min.js"],
+  "exclude": ["./dist/*.{js,ts}"],
   "compilerOptions": {
     "allowJs": true,
     "checkJs": false,
     "declaration": true,
-    "emitDeclarationOnly": true,
+    "rootDir": "./dist",
     "declarationDir": "./dist",
-    "esModuleInterop": false
+    "emitDeclarationOnly": true,
   },
 }

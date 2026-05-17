@@ -7,31 +7,39 @@ export default [
   {
     input: './src/index.mjs',
     external: ['json5'],
-    plugins: [glob()],
+    plugins: [glob(), terser()],
     output: [
       {
-        file: pkg.main,
         format: 'cjs',
+        file: pkg.main,
         strict: true,
         sourcemap: true,
       },
       {
-        file: pkg.module,
         format: 'esm',
+        file: pkg.module,
         sourcemap: true,
       },
     ],
   },
-  
+
   {
     input: './src/index.mjs',
-    output: {
-      file: pkg.browser,
-      name: 'is',
-      format: 'iife',
-      strict: true,
-      sourcemap: true,
-    },
+    output: [
+      {
+        name: 'is',
+        format: 'iife',
+        file: pkg.browser.default,
+        strict: true,
+        sourcemap: true,
+      },
+      {
+        name: 'is',
+        format: 'esm',
+        file: pkg.browser.import,
+        sourcemap: true,
+      }
+    ],
     plugins: [glob(), nodeResolve(), terser()],
-  }
+  },
 ];

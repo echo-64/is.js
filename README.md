@@ -423,8 +423,16 @@ is('null').null({ string: true }); // true
 Checks if the value is a number.
 
 ```javascript
-is(1).number(); // true
-is('2').number({ string: true }); // true
+is(10).number(); // true
+is('-10').number({ string: true }) // true
+is('1.3').number({ string: true }) // true
+is('0xFF').number({ string: true }) // true
+is('0o77').number({ string: true }) // true
+is('0b1010').number({ string: true }) // true
+is('1.5e-3').number({ string: true }) // true
+is('Infinity').number({ string: true }) // true
+is('-Infinity').number({ string: true }) // true
+is('NaN').number({ string: true }) // false
 ```
 
 ### `.object([options])`
